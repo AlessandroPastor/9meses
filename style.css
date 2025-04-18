@@ -1,0 +1,104 @@
+/* ==== GENERAL ==== */
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background: #111;
+	font-family: 'Verdana', sans-serif;
+	position: relative;
+	height: 100vh;
+}
+
+/* ==== CANVAS (al fondo) ==== */
+canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+	z-index: 0;
+}
+
+/* ==== IMÁGENES FINALES ==== */
+#img1, #img2 {
+	position: absolute;
+	top: 10%;
+	width: 300px;           /* 📐 TAMAÑO IGUAL */
+	height: auto;
+	aspect-ratio: 3 / 4;     /* ✨ Ayuda a mantener proporción */
+	opacity: 0;
+	transform: scale(0.95);
+	transition: opacity 2s ease, transform 2s ease;
+	border-radius: 15px;
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+	display: block;
+	z-index: 10;
+	object-fit: cover;      /* ✨ Asegura recorte proporcional sin deformar */
+}
+
+
+/* Posiciones laterales */
+#img1 {
+	left: 10%;
+}
+#img2 {
+	right: 10%;
+}
+
+/* ==== MENSAJE FINAL ==== */
+#mensajeFinal {
+	position: absolute;
+	bottom: 10%;
+	width: 100%;
+	text-align: center;
+	font-size: 28px;
+	color: white;
+	text-shadow: 0 0 5px #ff69b4;
+	opacity: 0;
+	transition: opacity 2s ease;
+	animation: latido 2s infinite;
+	z-index: 10;
+}
+
+/* Esta clase se aplica desde JS para hacerlas visibles */
+.show {
+	opacity: 1 !important;
+	transform: scale(1.05) !important;
+}
+
+
+/* Asegura que el mensaje también se muestre correctamente */
+#mensajeFinal.show {
+	opacity: 1;
+}
+
+/* ==== EFECTO DE LATIDO ==== */
+@keyframes latido {
+	0%   { transform: scale(1); }
+	25%  { transform: scale(1.03); }
+	50%  { transform: scale(1); }
+	75%  { transform: scale(1.03); }
+	100% { transform: scale(1); }
+}
+
+/* ==== CRÉDITOS / PIE DE PÁGINA (opcional) ==== */
+p {
+	margin: 0;
+	position: absolute;
+	font: 16px Verdana;
+	color: #eee;
+	height: 25px;
+	top: calc(100vh - 30px);
+	text-shadow: 0 0 2px white;
+}
+p a {
+	text-decoration: none;
+	color: #aaa;
+}
+span {
+	font-size: 11px;
+}
+p > a:first-of-type {
+	font-size: 20px;
+}
