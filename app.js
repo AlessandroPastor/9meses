@@ -1,4 +1,11 @@
 const c = document.getElementById('c');
+const DPR = window.devicePixelRatio || 1; // Escala retina
+
+function scaleByScreen(val) {
+	// Escala según el ancho del viewport base (ej: 1920)
+	const baseWidth = 1920;
+	return val * (window.innerWidth / baseWidth);
+}
 var w = c.width = window.innerWidth,
 		h = c.height = window.innerHeight,
 		ctx = c.getContext( '2d' ),
@@ -7,10 +14,10 @@ var w = c.width = window.innerWidth,
 		hh = h / 2,
 		
 		opts = {
-			strings: [ 'FELIZ', '9','MESES','TE AMO MAMI Y NUNCA DEJARE DE AMARTE','Brunella y Alessandro'],
-			charSize: 30,
-			charSpacing: 35,
-			lineHeight: 40,
+			strings: [ 'FELIZ', '9','MESES','TE AMO MAMI Y NUNCA DEJARE DE AMARTE','Brunella y Alessandro' ],
+			charSize: scaleByScreen(30),
+			charSpacing: scaleByScreen(35),
+			lineHeight: scaleByScreen(40),
 			
 			cx: w / 2,
 			cy: h / 2,
@@ -413,13 +420,36 @@ for( var i = 0; i < opts.strings.length; ++i ){
 
 anim();
 
-window.addEventListener( 'resize', function(){
-	
-	w = c.width = window.innerWidth;
-	h = c.height = window.innerHeight;
-	
+window.addEventListener('resize', () => {
+	// Recalcula canvas con DPR
+	w = window.innerWidth;
+	h = window.innerHeight;
+	c.width = w * DPR;
+	c.height = h * DPR;
+	c.style.width = w + 'px';
+	c.style.height = h + 'px';
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	ctx.scale(DPR, DPR);
+
+	// Recalcular centro
 	hw = w / 2;
 	hh = h / 2;
-	
+
+	// Recalcular fuente
+	opts.charSize = scaleByScreen(30);
+	opts.charSpacing = scaleByScreen(35);
+	opts.lineHeight = scaleByScreen(40);
 	ctx.font = opts.charSize + 'px Verdana';
-})
+
+	// Recalcular letras
+	letters.length = 0;
+	for (let i = 0; i < opts.strings.length; ++i) {
+		for (let j = 0; j < opts.strings[i].length; ++j) {
+			letters.push(new Letter(
+				opts.strings[i][j],
+				j * opts.charSpacing + opts.charSpacing / 2 - opts.strings[i].length * opts.charSize / 2,
+				i * opts.lineHeight + opts.lineHeight / 2 - opts.strings.length * opts.lineHeight / 2
+			));
+		}
+	}
+});

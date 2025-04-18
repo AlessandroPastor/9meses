@@ -24,9 +24,10 @@ canvas {
 #img1, #img2 {
 	position: absolute;
 	top: 10%;
-	width: 300px;           /* 📐 TAMAÑO IGUAL */
+	width: 300px;
+	max-width: 80vw;              /* 💡 Asegura que no excedan ancho de pantalla */
 	height: auto;
-	aspect-ratio: 3 / 4;     /* ✨ Ayuda a mantener proporción */
+	aspect-ratio: 3 / 4;
 	opacity: 0;
 	transform: scale(0.95);
 	transition: opacity 2s ease, transform 2s ease;
@@ -34,9 +35,8 @@ canvas {
 	box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 	display: block;
 	z-index: 10;
-	object-fit: cover;      /* ✨ Asegura recorte proporcional sin deformar */
+	object-fit: cover;
 }
-
 
 /* Posiciones laterales */
 #img1 {
@@ -67,8 +67,6 @@ canvas {
 	transform: scale(1.05) !important;
 }
 
-
-/* Asegura que el mensaje también se muestre correctamente */
 #mensajeFinal.show {
 	opacity: 1;
 }
@@ -82,7 +80,7 @@ canvas {
 	100% { transform: scale(1); }
 }
 
-/* ==== CRÉDITOS / PIE DE PÁGINA (opcional) ==== */
+/* ==== CRÉDITOS ==== */
 p {
 	margin: 0;
 	position: absolute;
@@ -91,6 +89,8 @@ p {
 	height: 25px;
 	top: calc(100vh - 30px);
 	text-shadow: 0 0 2px white;
+	text-align: center;
+	width: 100%;
 }
 p a {
 	text-decoration: none;
@@ -101,4 +101,30 @@ span {
 }
 p > a:first-of-type {
 	font-size: 20px;
+}
+
+/* ==== RESPONSIVE: Teléfonos y pantallas pequeñas ==== */
+@media (max-width: 768px) {
+	#img1, #img2 {
+		position: relative;
+		top: auto;
+		left: auto;
+		right: auto;
+		margin: 20px auto;
+		display: block;
+		width: 70vw;
+		max-width: 90%;
+	}
+
+	#mensajeFinal {
+		font-size: 20px;
+		padding: 0 10px;
+		bottom: 5%;
+	}
+
+	p {
+		font-size: 12px;
+		top: unset;
+		bottom: 5px;
+	}
 }
